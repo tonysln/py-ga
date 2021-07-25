@@ -3,6 +3,8 @@
 # genlearn.py
 # Basic GA implementation for guessing strings.
 
+# Use pypy3 for vastly better performance!
+
 import random
 import math
 import string
@@ -140,6 +142,4 @@ if __name__ == '__main__':
 
     run(target, pop_size, mutation_rate, power)
     print(f'Pop size: {pop_size}')
-    print('Done.')
-
-   
+    print('Done.')   
