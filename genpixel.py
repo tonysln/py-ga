@@ -4,6 +4,10 @@
 # Basic GA implementation for guessing pixel values (chars) for an image.
 # Each image is represented as an array of ASCII characters.
 
+# Using pypy3 is a must due to atrocious performance at the moment.
+# Recommended image side length: [4,10].
+# TODO: Make a basic img converter into ASCII chars for use here.
+
 import random
 import math
 import os
