@@ -5,15 +5,15 @@
 # Each image is represented as an array of ASCII characters.
 
 # Using pypy3 is a must due to atrocious performance at the moment.
-# Recommended image side length: [4,10].
-# TODO: Make a basic img converter into ASCII chars for use here.
+# Recommended image side length: [4,12].
 
 import random
 import math
 import os
+from PIL import Image
 
 
-PIXEL_CHARS = '. ,xXoO0*-'
+PIXEL_CHARS = '@#O%+=|i-:. '
 
 def cls():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -118,7 +118,7 @@ def run(target_img, img_size, pop_size, mut_rate, power):
         pool,best_elem,best_fit = create_pool(population)
 
         output = f'[{generations:05}] {round(best_fit,5):.5f}'
-        if generations % 10 == 0:
+        if generations % 100 == 0:
             cls()
             draw_img(repr_to_arr(best_elem, img_size))
             print(output)
@@ -167,13 +167,28 @@ def random_img(size):
     return img
 
 
+def convert_img(path, size):
+    img = Image.open(path).convert('L')
+    img = img.resize((size, size))
+
+    img_pixels = list(img.getdata())
+    img_array = []
+    for i in range(0, len(img_pixels), size):
+        line = img_pixels[i:i+size]
+        img_array.append([PIXEL_CHARS[pixel//25] for pixel in line])
+
+    return img_array
+
+
 if __name__ == '__main__':
     side_len = 10
-    target = random_img(side_len)
+
+    # target = random_img(side_len)
+    target = convert_img('tux.png', side_len)
 
     pop_size = 500
     mut_rate = 0.001
-    power = 5
+    power = 6
     run(repr(target), side_len, pop_size, mut_rate, power)
 
     draw_img(target)
