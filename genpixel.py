@@ -13,7 +13,7 @@ import os
 from PIL import Image
 
 
-PIXEL_CHARS = '@#O%+=|i-:. '
+PIXEL_CHARS = '@#O%+=|i-:. '[::-1]
 
 def cls():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -104,7 +104,7 @@ def generate(pool, rate):
     return mutate(child, rate)
     
 
-def run(target_img, img_size, pop_size, mut_rate, power):
+def run(target_img, img_size, pop_size, mut_rate, power, print_img=True):
     generations = 0
     found = False
     # Initial population
@@ -119,8 +119,9 @@ def run(target_img, img_size, pop_size, mut_rate, power):
 
         output = f'[{generations:05}] {round(best_fit,5):.5f}'
         if generations % 100 == 0:
-            cls()
-            draw_img(repr_to_arr(best_elem, img_size))
+            if print_img:
+                cls()
+                draw_img(repr_to_arr(best_elem, img_size))
             print(output)
 
         # Target string found
@@ -186,10 +187,11 @@ if __name__ == '__main__':
     # target = random_img(side_len)
     target = convert_img('tux.png', side_len)
 
-    pop_size = 500
-    mut_rate = 0.001
-    power = 6
-    run(repr(target), side_len, pop_size, mut_rate, power)
+    pop_size = 1000
+    mut_rate = 0.0008
+    power = 5
+    print_img = False
+    run(repr(target), side_len, pop_size, mut_rate, power, print_img)
 
     draw_img(target)
     print('Done.')
