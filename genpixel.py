@@ -182,7 +182,7 @@ def convert_img(path, size):
 
 
 if __name__ == '__main__':
-    side_len = 10
+    side_len = 12
 
     # target = random_img(side_len)
     target = convert_img('tux.png', side_len)
