@@ -93,11 +93,8 @@ def step(bits, last):
     x = last[1] + dirn[1]
 
     # Slide along the walls
-    # TODO fix
-    x = max(x, 0)
-    x = min(x, 16)
-    y = max(y, 0)
-    y = min(y, 8)
+    x = min(max(x, 0), 16)
+    y = min(max(y, 0), 8)
     
     return (y,x)
 
