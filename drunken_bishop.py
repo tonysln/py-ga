@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 
-CHARS = ' .o+=*BOX@%&#/^S'
+CHARS = ' .o+=*BOX@%&#/^SE'
 
 def draw_board(arr):
     w = 17
@@ -44,7 +44,7 @@ def insert_vals(vals, arr):
         else:
             counts[(y,x)] = 1
 
-        arr[y][x] = CHARS[counts[(y,x)] % 16]
+        arr[y][x] = CHARS[counts[(y,x)] % len(CHARS)]
 
     return arr
 
@@ -72,8 +72,8 @@ def hex_to_bits(val):
 def step(bits, last):
     moves = {
         '00': (-1,-1),
-        '01': (1,-1),
-        '10': (-1,1),
+        '01': (-1,1),
+        '10': (1,-1),
         '11': (1,1)
     }
 
