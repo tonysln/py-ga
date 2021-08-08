@@ -31,26 +31,37 @@ def create_arr():
 
 def insert_vals(vals, arr):
     arr = arr.copy()
-    counts = {
-        (4,8): 14
-    }
+    counts = {}
 
-    for val in vals:
+    for idx,val in enumerate(vals):
         y = val[0]
         x = val[1]
+
+        # Set the Starting char
+        if idx == 0:
+            arr[y][x] = CHARS[15]
+            continue
+
+        # Set the Ending char
+        if idx == len(vals) - 1:
+            arr[y][x] = CHARS[16]
+            continue
         
         if (y,x) in counts:
             counts[(y,x)] += 1
         else:
             counts[(y,x)] = 1
 
-        arr[y][x] = CHARS[counts[(y,x)] % len(CHARS)]
+        arr[y][x] = CHARS[counts[(y,x)] % (len(CHARS)-2)]
 
     return arr
 
 
 def walk(inp):
     path = [(4,8)]
+
+    if ':' in inp:
+        inp = inp.replace(':', '')
 
     for i in range(0, len(inp), 2):
         hex_pair = inp[i:i+2]
@@ -92,7 +103,7 @@ def step(bits, last):
 
 
 if __name__ == '__main__':
-    hex_str = 'fc94b0c0ff331e5b05443e5843997697'
+    hex_str = 'd4:33:fd:c5:64:d3:ee:9e:97:ca:54:21:3b:e4:ba:e9'
     steps = walk(hex_str)
     arr = insert_vals(steps, create_arr())
 
