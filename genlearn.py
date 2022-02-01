@@ -6,11 +6,11 @@
 # Use pypy3 for vastly better performance!
 
 import random
-import math
+import sys
 import string
 
 
-CHARS = string.ascii_letters + ' ,.?!1234567890';
+CHARS = string.ascii_letters + ' ,.?!1234567890'
 
 def pop_fitness(pop, target, power):
     # Return a list of pairs [element, fitness]
@@ -135,10 +135,25 @@ def run(target, pop_size, mut_rate, power):
 
 
 if __name__ == '__main__':
-    target = 'to be or not to be that is the question'
-    pop_size = 400
-    mutation_rate = 0.003
+    # Default values
+    pop_size = 300
+    mutation_rate = 0.002
     power = 4
+
+    args = sys.argv
+    if len(args) == 1 or '-h' in args:
+        print('Usage: genlearn.py -t "<target string>" [-s <population size>] [-m <mutation rate>] [-p <power>]')
+        quit()
+
+    if '-t' in args:
+        target = args[args.index('-t') + 1]
+    if '-s' in args:
+        pop_size = int(args[args.index('-s') + 1])
+    if '-m' in args:
+        mutation_rate = float(args[args.index('-m') + 1])
+    if '-p' in args:
+        power = int(args[args.index('-p') + 1])
+
 
     run(target, pop_size, mutation_rate, power)
     print(f'Pop size: {pop_size}')
